@@ -5,6 +5,7 @@ from flask import Blueprint
 from redis import Redis
 from rq import Worker, Queue, Connection
 
+
 def get_redis():
     """Returns redis connection"""
     try:
