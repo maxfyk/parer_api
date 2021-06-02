@@ -3,4 +3,5 @@ redis
 rq
 gunicorn
 Flask
+mysqlclient
 rq-dashboard
