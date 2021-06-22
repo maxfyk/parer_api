@@ -74,24 +74,131 @@ def tasks_g():
             return jsonify({"data": job.result})
     except Exception as e:
         return jsonify({"error": e, "data": []})
-# TASK/S
 
 
+# VIDEO/S
 @api.route('/video', methods=['GET'])
 def video_g():
-    return True
+    try:
+        column = request.args.get('column')
+        value = request.args.get('value')
+        q = Queue('get_videos', connection=r)
+        job = q.enqueue('get_videos.get_videos', "WHERE", column, value)
+        await_job(job, 5)
+        if not job.result:
+            return {"data": []}
+        else:
+            return jsonify({"data": job.result})
+    except Exception as e:
+        return jsonify({"error": e, "data": []})
 
 
 @api.route('/video', methods=['POST'])
 def video_p():
-    return True
+    try:
+        content = request.json
+        content = dict(content).items()
+        print(content)
+        q = Queue('write_video', connection=r)
+        job = q.enqueue('write_video.write_video', [content])
+        await_job(job, 5)
+        if not job.result:
+            return {"data": False}
+        else:
+            return jsonify({"data": True})
+    except Exception as e:
+        return jsonify({"error": e, "data": False})
 
 
 @api.route('/video', methods=['DELETE'])
 def video_d():
-    return True
+    try:
+        return jsonify({"data": "Not implemented yet"})
+        id = request.args.get('id')
+        q = Queue('delete_video', connection=r)
+        job = q.enqueue('delete_video.delete_video', id)
+        await_job(job, 5)
+        if not job.result:
+            return {"data": False}
+        else:
+            return jsonify({"data": True})
+    except Exception as e:
+        return jsonify({"error": e, "data": False})
 
 
 @api.route('/videos', methods=['GET'])
 def videos_g():
-    return True
+    try:
+        q = Queue('get_videos', connection=r)
+        job = q.enqueue('get_videos.get_videos')
+        await_job(job, 5)
+        if not job.result:
+            return {"data": []}
+        else:
+            return jsonify({"data": job.result})
+    except Exception as e:
+        return jsonify({"error": e, "data": []})
+
+
+# CHANNELS NOT DONE AT ALL
+@api.route('/channel', methods=['GET'])
+def channel_g():
+    try:
+        column = request.args.get('column')
+        value = request.args.get('value')
+        q = Queue('get_videos', connection=r)
+        job = q.enqueue('get_videos.get_videos', "WHERE", column, value)
+        await_job(job, 5)
+        if not job.result:
+            return {"data": []}
+        else:
+            return jsonify({"data": job.result})
+    except Exception as e:
+        return jsonify({"error": e, "data": []})
+
+
+@api.route('/channel', methods=['POST'])
+def channel_p():
+    try:
+        content = request.json
+        content = dict(content).items()
+        print(content)
+        q = Queue('write_video', connection=r)
+        job = q.enqueue('write_video.write_video', [content])
+        await_job(job, 5)
+        if not job.result:
+            return {"data": False}
+        else:
+            return jsonify({"data": True})
+    except Exception as e:
+        return jsonify({"error": e, "data": False})
+
+
+@api.route('/channel', methods=['DELETE'])
+def channel_d():
+    try:
+        return jsonify({"data": "Not implemented yet"})
+        id = request.args.get('id')
+        q = Queue('delete_video', connection=r)
+        job = q.enqueue('delete_video.delete_video', id)
+        await_job(job, 5)
+        if not job.result:
+            return {"data": False}
+        else:
+            return jsonify({"data": True})
+    except Exception as e:
+        return jsonify({"error": e, "data": False})
+
+
+@api.route('/channels', methods=['GET'])
+def channels_g():
+    try:
+        q = Queue('get_videos', connection=r)
+        job = q.enqueue('get_videos.get_videos')
+        await_job(job, 5)
+        if not job.result:
+            return {"data": []}
+        else:
+            return jsonify({"data": job.result})
+    except Exception as e:
+        return jsonify({"error": e, "data": []})
